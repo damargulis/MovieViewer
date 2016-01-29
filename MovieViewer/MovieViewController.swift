@@ -10,15 +10,23 @@ import UIKit
 import AFNetworking
 import MBProgressHUD
  
-class MovieViewController: UIViewController, UICollectionViewDataSource{
+class MovieViewController: UIViewController, UICollectionViewDataSource, UISearchBarDelegate{
     
     @IBOutlet weak var collectionView: UICollectionView!
+    
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     var movies: [NSDictionary]?
+    var filteredData: [NSDictionary]?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        
         collectionView.dataSource = self
+        searchBar.delegate = self
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: "refreshControlAction:", forControlEvents: UIControlEvents.ValueChanged)
@@ -37,8 +45,6 @@ class MovieViewController: UIViewController, UICollectionViewDataSource{
             delegateQueue: NSOperationQueue.mainQueue()
         )
         
-        MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-        
         let task: NSURLSessionDataTask = session.dataTaskWithRequest(request,
             completionHandler: { (dataOrNil, response, error) in
                 if let data = dataOrNil {
@@ -47,6 +53,7 @@ class MovieViewController: UIViewController, UICollectionViewDataSource{
                             print("response: \(responseDictionary)")
                             
                             self.movies = responseDictionary["results"] as! [NSDictionary]
+                            self.filteredData = self.movies
                             self.collectionView.reloadData()
                             MBProgressHUD.hideHUDForView(self.view, animated: true)
                             
@@ -55,7 +62,7 @@ class MovieViewController: UIViewController, UICollectionViewDataSource{
                 
         })
         task.resume()
-
+        
         // Do any additional setup after loading the view.
     }
 
@@ -74,8 +81,8 @@ class MovieViewController: UIViewController, UICollectionViewDataSource{
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let movies = movies {
-            return movies.count
+        if let filteredData = filteredData {
+            return filteredData.count
         } else{
             return 0
         }
@@ -84,7 +91,7 @@ class MovieViewController: UIViewController, UICollectionViewDataSource{
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("collectionMovieCellid", forIndexPath: indexPath) as! CollectionMovieCell
         
-        let movie = movies![indexPath.row]
+        let movie = filteredData![indexPath.row]
         let title = movie["title"] as! String
         let overview = movie["overview"] as! String
         let baseUrl = "http://image.tmdb.org/t/p/w500"
@@ -139,6 +146,38 @@ class MovieViewController: UIViewController, UICollectionViewDataSource{
     }
     
     
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        // When there is no text, filteredData is the same as the original data
+        if searchText.isEmpty {
+            filteredData = movies
+        } else {
+            // The user has entered text into the search box
+            // Use the filter method to iterate over all items in the data array
+            // For each item, return true if the item should be included and false if the
+            // item should NOT be included
+            filteredData = movies!.filter({(dataItem: NSDictionary) -> Bool in
+                // If dataItem matches the searchText, return true to include it
+                
+                let title = dataItem["title"] as! String
+                if title.rangeOfString(searchText, options: .CaseInsensitiveSearch) != nil {
+                    return true
+                } else {
+                    return false
+                }
+            })
+        }
+        collectionView.reloadData()
+    }
+    
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        self.searchBar.showsCancelButton = true
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        searchBar.showsCancelButton = false
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
+    }
 
     /*
     // MARK: - Navigation
