@@ -92,14 +92,16 @@ class MovieViewController: UIViewController, UICollectionViewDataSource, UISearc
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("collectionMovieCellid", forIndexPath: indexPath) as! CollectionMovieCell
         
         let movie = filteredData![indexPath.row]
-        let title = movie["title"] as! String
-        let overview = movie["overview"] as! String
+        let title = movie["title"] as? String
+        let overview = movie["overview"] as? String
         let baseUrl = "http://image.tmdb.org/t/p/w500"
-        let posterPath = movie["poster_path"] as! String
-        let imageUrl = NSURL(string: baseUrl + posterPath)
+        if let posterPath = movie["poster_path"] as? String{
+            
         
-        cell.posterView.setImageWithURL(imageUrl!)
-        print("row \(indexPath.row)")
+            let imageUrl = NSURL(string: baseUrl + posterPath)
+        
+            cell.posterView.setImageWithURL(imageUrl!)
+        }
         return cell
         
     }
@@ -179,14 +181,24 @@ class MovieViewController: UIViewController, UICollectionViewDataSource, UISearc
         searchBar.resignFirstResponder()
     }
 
-    /*
+    
+    
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        let cell = sender as! UICollectionViewCell
+        let indexPath = collectionView.indexPathForCell(cell)
+        let movie = movies![indexPath!.row]
+        
+        let detailViewController = segue.destinationViewController as! DetailViewController
+        
+        detailViewController.movie = movie
+        
     }
-    */
+ 
 
 }
