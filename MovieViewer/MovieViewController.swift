@@ -18,6 +18,7 @@ class MovieViewController: UIViewController, UICollectionViewDataSource, UISearc
     
     var movies: [NSDictionary]?
     var filteredData: [NSDictionary]?
+    var endpoint: String!
     
     
     override func viewDidLoad() {
@@ -33,7 +34,7 @@ class MovieViewController: UIViewController, UICollectionViewDataSource, UISearc
         collectionView.insertSubview(refreshControl, atIndex: 0)
         
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-        let url = NSURL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")
+        let url = NSURL(string: "https://api.themoviedb.org/3/movie/\(endpoint)?api_key=\(apiKey)")
         let request = NSURLRequest(
             URL: url!,
             cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData,
@@ -110,7 +111,7 @@ class MovieViewController: UIViewController, UICollectionViewDataSource, UISearc
         
         
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-        let url = NSURL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")
+        let url = NSURL(string: "https://api.themoviedb.org/3/movie/\(endpoint)?api_key=\(apiKey)")
         let myRequest = NSURLRequest(
             URL: url!,
             cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData,
