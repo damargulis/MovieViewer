@@ -25,7 +25,7 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         scrollView.contentSize = CGSize(width: scrollView.frame.size.width, height: infoView.frame.origin.y + infoView.frame.size.height)
         
         let title = movie["title"] as? String
@@ -34,7 +34,10 @@ class DetailViewController: UIViewController {
         let overview = movie["overview"] as? String
         overviewLabel.text = overview
         
+        print(overviewLabel.frame.size.height)
+        
         overviewLabel.sizeToFit()
+        infoView.sizeToFit()
         
         let baseUrl = "http://image.tmdb.org/t/p/w500"
         if let posterPath = movie["poster_path"] as? String{
@@ -44,8 +47,6 @@ class DetailViewController: UIViewController {
             
             posterImageView.setImageWithURL(imageUrl!)
         }
-
-        
         
         // Do any additional setup after loading the view.
     }

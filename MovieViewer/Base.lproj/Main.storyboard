@@ -30,20 +30,21 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="collectionMovieCellid" id="RAs-uw-iwt" customClass="CollectionMovieCell" customModule="MovieViewer" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="159" height="158"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="159.5" height="158"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="159" height="158"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="159.5" height="158"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="5iZ-CB-Fz4">
-                                                    <rect key="frame" x="0.0" y="0.0" width="159" height="158"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="159" height="150"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <color key="backgroundColor" red="0.97817138469199849" green="1" blue="0.99748089986331767" alpha="1" colorSpace="calibratedRGB"/>
+                                        <size key="customSize" width="159.69999999999999" height="158"/>
                                         <connections>
                                             <outlet property="posterView" destination="5iZ-CB-Fz4" id="XML-SO-JsE"/>
                                             <segue destination="pZV-D0-x0x" kind="push" id="BD6-xy-YRq"/>
@@ -86,18 +87,18 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <view alpha="0.80000000000000004" contentMode="scaleToFill" id="lI5-5S-76s">
-                                        <rect key="frame" x="0.0" y="568" width="320" height="245"/>
+                                        <rect key="frame" x="0.0" y="565" width="320" height="295"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="La4-ZX-fh2">
-                                                <rect key="frame" x="8" y="17" width="304" height="27"/>
+                                                <rect key="frame" x="8" y="20" width="304" height="27"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Overview" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zrr-x9-KMB">
-                                                <rect key="frame" x="8" y="52" width="304" height="21"/>
+                                                <rect key="frame" x="8" y="55" width="304" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>

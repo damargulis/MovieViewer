@@ -103,9 +103,24 @@ class MovieViewController: UIViewController, UICollectionViewDataSource, UISearc
         
             cell.posterView.setImageWithURL(imageUrl!)
         }
+        
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor.redColor()
+        
+        cell.selectedBackgroundView = backgroundView
+        
         return cell
         
     }
+    
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
+        collectionView.deselectItemAtIndexPath(indexPath, animated: true)
+        
+        collectionView.reloadItemsAtIndexPaths([indexPath])
+        
+    }
+    
     
     func refreshControlAction(refreshControl: UIRefreshControl){
         
