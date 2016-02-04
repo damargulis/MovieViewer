@@ -39,17 +39,55 @@ class DetailViewController: UIViewController {
         overviewLabel.sizeToFit()
         infoView.sizeToFit()
         
-        let baseUrl = "http://image.tmdb.org/t/p/w500"
+//        let baseUrl = "http://image.tmdb.org/t/p/w500"
         if let posterPath = movie["poster_path"] as? String{
             
             
-            let imageUrl = NSURL(string: baseUrl + posterPath)
+//            let imageUrl = NSURL(string: baseUrl + posterPath)
+            let smallBaseUrl = "https://image.tmdb.org/t/p/w45"
+            let largeBaseUrl = "https://image.tmdb.org/t/p/original"
             
-            posterImageView.setImageWithURL(imageUrl!)
+            
+            
+            let smallImageRequest = NSURLRequest(URL: NSURL(string: smallBaseUrl + posterPath)!)
+            let largeImageRequest = NSURLRequest(URL: NSURL(string: largeBaseUrl + posterPath)!)
+            
+            posterImageView.setImageWithURLRequest(
+                smallImageRequest,
+                placeholderImage: nil,
+                success: { (smallImageRequest, smallImageResponse, smallImage) -> Void in
+                    
+                    self.posterImageView.alpha = 0.0
+                    self.posterImageView.image = smallImage;
+                    
+                    UIView.animateWithDuration(0.3, animations: { () -> Void in
+                        self.posterImageView.alpha = 1.0
+                        }, completion: { (sucess) -> Void in
+                            
+                       self.posterImageView.setImageWithURLRequest(
+                                largeImageRequest,
+                                placeholderImage: smallImage,
+                                success: { ( largeImageRequest, largeImageResponse, largeImage) -> Void in
+                                    
+                                    self.posterImageView.image = largeImage;
+                            },
+                                failure: { (request, response, error) -> Void in
+                                    self.posterImageView.image = nil;
+                            })
+                    })
+                    
+                },
+                failure: { ( request, response, error) -> Void in
+               self.posterImageView.image = nil;
+            })
+            
+//            posterImageView.setImageWithURL(imageUrl!)
         }
+        
         
         // Do any additional setup after loading the view.
     }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
